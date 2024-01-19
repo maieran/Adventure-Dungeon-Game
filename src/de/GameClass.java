@@ -1,6 +1,5 @@
 package de;
 
-import com.sun.security.jgss.GSSUtil;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -23,18 +22,19 @@ public class GameClass {
         int healthPotionHealAmount = 30;
         int healthPotionDropChance = 50;
 
-        boolean running = true;
-        System.out.println("WELCOEM TO THE DUNGEON");
+
+        System.out.println("WELCOME TO THE DUNGEON");
 
         // Start of Game
 
-        while(running) {
+        while(true) {
             System.out.println("*************************************************");
 
             int enemyHealth = random.nextInt(maxEnemyHealth);
             String enemy = enemies[(random.nextInt(enemies.length))];
             System.out.println("\t<< " + enemy + " has appeared ! >>\n");
 
+            GAME:
             while(enemyHealth > 0) {
                 System.out.println("\t Your HP: " + health);
                 System.out.println("\t" + enemy + "'s HP: " + enemyHealth);
@@ -42,9 +42,74 @@ public class GameClass {
                 System.out.println("\t1. Attack");
                 System.out.println("\t2. Drink health potion");
                 System.out.println("\t3. Run!!");
-                
+
+                //Interaction with the player/user
+                String input = scanner.nextLine();
+                switch (input) {
+                    case "1":
+                        int damageDealt = random.nextInt(attackDamage);
+                        int damageTaken = random.nextInt(enemyAttackDamage);
+
+                        enemyHealth -= damageDealt;
+                        health -= damageTaken;
+
+                        System.out.println("\t You strike the " + enemy + "for" + damageDealt + " damage. ");
+                        System.out.println("\t You receive " + damageTaken + " in retaliation: ");
+
+                        if (health <= 0) {
+                            System.out.println("\t You have taken too much damage, you are too weak and died");
+                            break GAME;
+                        }
+                        break;
+                    case "2":
+                        if (numHealthPotions > 0) {
+                            health += healthPotionHealAmount;
+                            numHealthPotions--;
+                            System.out.println("\t> You have healed yourself " + healthPotionHealAmount + "\n\t You have " + health + "amount " +
+                                    "of HP. " + "\n\t" + numHealthPotions + "health potions left. \n");
+                        } else {
+                            System.out.println("\t> You have run out of health potions! Perhaps your enemies might have one!");
+                        }
+                        break;
+                    case "3":
+                        System.out.println("\t> You run away from the " + enemy + "!");
+                        break;
+                    default:
+                        System.out.println("Invalid command, Choose 1, 2 or 3!");
+                }
+
+                //Check after interaction whether the player is still alive
+                if (health < 1) {
+                    System.out.println("You are bleeding out and cannot fight anymore");
+                    break;
+                }
+                System.out.println("*************************************************");
+                System.out.println(" ⚔︎ " + enemy + " was defeated! ⚔︎ ");
+                System.out.println(" ⚔︎ You have " + health + " HP left. ⚔︎");
+
+                if (random.nextInt(100) < healthPotionDropChance) {
+                    numHealthPotions++;
+                    System.out.println(" ⚔︎ The " + enemy + " dropped a health potion ⚔︎ ");
+                    System.out.println(" ⚔︎ You have " + numHealthPotions + "health potions ⚔︎ ");
+                }
+
+                System.out.println("*************************************************");
+                System.out.println(" What would you like to do now? ");
+                System.out.println("1. Continue fighting? ");
+                System.out.println("2. Exit game");
+                input = scanner.nextLine();
+
+                while (!input.equals("1") && !input.equals("2")) {
+                    System.out.println("Invalid command! Choose 1 or 2");
+                    input = scanner.nextLine();
+                }
+                if (input.equals("1")) {
+                    System.out.println("You can continue on your adventure!");
+                } else if (input.equals("2")) {
+                    System.out.println("Game over");
+                    break;
+                }
             }
         }
-
     }
 }
