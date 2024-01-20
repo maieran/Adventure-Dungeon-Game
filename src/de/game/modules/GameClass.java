@@ -1,5 +1,6 @@
-package de;
+package de.game.modules;
 
+import de.game.modules.model.*;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -12,6 +13,7 @@ public class GameClass {
 
         //game variables
         String [] enemies = {"Skeleton", "Zombie", "Warrior", "Assassin"};
+        //AbstractCharacter[] enemiesCharacter = {new Assassin(1), new Zombie(2), new Warrior(3), new Skeleton(4)};
         int maxEnemyHealth = 70;
         int enemyAttackDamage = 30;
 
@@ -26,7 +28,6 @@ public class GameClass {
         System.out.println("WELCOME TO THE DUNGEON");
 
         // Start of Game
-
         while(true) {
             System.out.println("*************************************************");
 
@@ -36,7 +37,7 @@ public class GameClass {
 
             GAME:
             while(enemyHealth > 0) {
-                System.out.println("\t Your HP: " + health);
+                System.out.println("\tYour HP: " + health);
                 System.out.println("\t" + enemy + "'s HP: " + enemyHealth);
                 System.out.println("\n\tWhat would you like to do with your enemy?");
                 System.out.println("\t1. Attack");
@@ -50,11 +51,18 @@ public class GameClass {
                         int damageDealt = random.nextInt(attackDamage);
                         int damageTaken = random.nextInt(enemyAttackDamage);
 
-                        enemyHealth -= damageDealt;
-                        health -= damageTaken;
 
-                        System.out.println("\t You strike the " + enemy + "for" + damageDealt + " damage. ");
-                        System.out.println("\t You receive " + damageTaken + " in retaliation: ");
+                        enemyHealth -= damageDealt;
+                        System.out.println("\t You strike the " + enemy + " for " + damageDealt + " damage. ");
+                        health -= damageTaken;
+                        System.out.println("\t You receive " + damageTaken + " in retaliation!");
+                        System.out.println(" ");
+
+                        if (random.nextInt(100) < healthPotionDropChance) {
+                            numHealthPotions++;
+                            System.out.println(" ⚔︎ The " + enemy + " dropped a health potion ⚔︎ ");
+                            System.out.println(" ⚔︎ You have " + numHealthPotions + " health potions ⚔︎ ");
+                        }
 
                         if (health <= 0) {
                             System.out.println("\t You have taken too much damage, you are too weak and died");
@@ -73,7 +81,9 @@ public class GameClass {
                         break;
                     case "3":
                         System.out.println("\t> You run away from the " + enemy + "!");
-                        break;
+                        break GAME;
+                    case "4":
+                        System.out.println("You have opened inventory");
                     default:
                         System.out.println("Invalid command, Choose 1, 2 or 3!");
                 }
@@ -83,15 +93,17 @@ public class GameClass {
                     System.out.println("You are bleeding out and cannot fight anymore");
                     break;
                 }
+
+                if (enemyHealth <= 0) {
+                    System.out.println("*************************************************");
+                    System.out.println(" ⚔︎ " + enemy + " was defeated! ⚔︎ ");
+                    System.out.println(" ⚔︎ You have " + health + " HP left. ⚔︎");
+                }
+
                 System.out.println("*************************************************");
-                System.out.println(" ⚔︎ " + enemy + " was defeated! ⚔︎ ");
                 System.out.println(" ⚔︎ You have " + health + " HP left. ⚔︎");
 
-                if (random.nextInt(100) < healthPotionDropChance) {
-                    numHealthPotions++;
-                    System.out.println(" ⚔︎ The " + enemy + " dropped a health potion ⚔︎ ");
-                    System.out.println(" ⚔︎ You have " + numHealthPotions + "health potions ⚔︎ ");
-                }
+
 
                 System.out.println("*************************************************");
                 System.out.println(" What would you like to do now? ");

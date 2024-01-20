@@ -114,4 +114,8 @@ fabric.properties
 !.idea/codeStyles
 !.idea/runConfigurations
 
+## Add to ignore the ds-files from macOS##
+**/.DS_Store
+
+
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all
