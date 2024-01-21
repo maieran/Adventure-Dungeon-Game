@@ -1,9 +1,18 @@
 package de.game.modules.model.player;
 
-import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bag {
     private int size;
+    private String image;
+    private List<InventoryObject> slots;
+
+    public Bag(int size, String image) {
+        this.size = size;
+        this.image = image;
+        this.slots = new ArrayList<>(size);
+    }
 
     public int getSize() {
         return size;
@@ -13,19 +22,44 @@ public class Bag {
         this.size = size;
     }
 
-    public Image getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public List<InventoryObject> getSlots() {
+        return slots;
     }
 
-    private Image image;
-
-
-    public Bag(int size, Image image) {
-        this.size = size;
-        this.image = image;
+    public void addInventoryObject(InventoryObject inventoryObject) {
+        if (slots.size() < size || slots.isEmpty()) {
+            slots.add(inventoryObject);
+        } else {
+            System.out.println("Bag is full. Cannot add more inventory objects.");
+            // You might want to handle this situation based on your requirements
+        }
     }
+
+    public void removeInventoryObject(InventoryObject inventoryObject) {
+        if (!inventoryObject.getName().isEmpty() && slots.contains(inventoryObject)) {
+            for (int i = 0; i < slots.size(); i++) {
+                if (inventoryObject.getName().equals(slots.get(i).getName())) {
+                    setSize(getSize() - 1);
+
+                    slots.remove(i);
+                    return;
+                }
+            }
+        }
+        System.out.println("Inventory object not found in the bag.");
+    }
+
+    public InventoryObject findHealthPotion() {
+        for (InventoryObject inventoryObject : slots) {
+            if (inventoryObject.getName().equals("Health Potion 🧪")) {
+                return inventoryObject;
+            }
+        }
+        return null;  // Return null if no health potion is found
+    }
+
 }

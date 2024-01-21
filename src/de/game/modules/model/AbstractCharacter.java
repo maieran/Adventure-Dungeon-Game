@@ -1,8 +1,16 @@
 package de.game.modules.model;
 
+import java.util.Random;
+
 public abstract class AbstractCharacter {
     private final Integer id;
     private int health;
+    private String name;
+    private final Random random = new Random();
+
+    protected AbstractCharacter(Integer id) {
+        this.id = id;
+    }
 
     public Integer getId() {
         return id;
@@ -36,10 +44,39 @@ public abstract class AbstractCharacter {
     private int defAmount;
 
 
-    public AbstractCharacter(Integer id, int health, int attackDamage, int defAmount) {
+    public AbstractCharacter(Integer id, int health, String name, int attackDamage, int defAmount) {
         this.id = id;
         this.health = health;
+        this.name = name;
         this.attackDamage = attackDamage;
         this.defAmount = defAmount;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void takeDamage(int damageTaken) {
+        if (getHealth() > 0) {
+            int health = getHealth() - damageTaken;
+            setHealth(health);
+        }
+    }
+
+    public int dealDamage (int attackDamage) {
+        return random.nextInt(attackDamage + 1);
+    }
+
+    public boolean isDefeated() {
+        return getHealth() <= 0;
+    }
+
+    public boolean shouldDropPotion() {
+        return isDefeated();
+    }
+
 }

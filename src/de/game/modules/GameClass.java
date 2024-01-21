@@ -1,6 +1,7 @@
 package de.game.modules;
 
 import de.game.modules.model.*;
+import de.game.modules.model.player.*;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -8,102 +9,98 @@ import java.util.Scanner;
 public class GameClass {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
         Random random = new Random();
 
-        //game variables
-        String [] enemies = {"Skeleton", "Zombie", "Warrior", "Assassin"};
-        //AbstractCharacter[] enemiesCharacter = {new Assassin(1), new Zombie(2), new Warrior(3), new Skeleton(4)};
-        int maxEnemyHealth = 70;
-        int enemyAttackDamage = 30;
 
-        //player variable
-        int health = 100;
-        int attackDamage = 25;
-        int numHealthPotions= 4;
-        int healthPotionHealAmount = 30;
-        int healthPotionDropChance = 50;
+        AbstractCharacter[] enemiesCharacters = {new Skeleton(1), new Zombie(2), new Warrior(3), new Assassin(4)};
+
+        // Player character
+        Bag standardPlayerBag = new Bag(10, "BagImage");
+        Weapon standardShortPlayerSword =  new Weapon("Sword", true, false, random.nextInt(31), 0, WeaponType.SHORT_SWORD);
+        Inventory standardPlayerInventory = new Inventory();
+        standardPlayerBag.addInventoryObject(standardShortPlayerSword);
+        standardPlayerInventory.addBag(standardPlayerBag);
+
+        PlayerCharacter player = new PlayerCharacter(0, 100, "Player", 25, 0, 4, standardPlayerBag,
+                standardShortPlayerSword, standardPlayerInventory);
+        player.setAttackDamage(player.getAttackDamage() + standardShortPlayerSword.getAttack());
+        player.setBag(standardPlayerBag);
+        int reduceAmount = 0;
+        for (int i = 0; i < 4; i++) {
+            player.getBag().addInventoryObject(new Potion("Health Potion 🧪", 30));
+            reduceAmount = i;
+        }
+        player.getBag().setSize(player.getBag().getSize() - reduceAmount);
+
 
 
         System.out.println("WELCOME TO THE DUNGEON");
 
         // Start of Game
-        while(true) {
+        while (true) {
             System.out.println("*************************************************");
-
-            int enemyHealth = random.nextInt(maxEnemyHealth);
-            String enemy = enemies[(random.nextInt(enemies.length))];
-            System.out.println("\t<< " + enemy + " has appeared ! >>\n");
+            AbstractCharacter enemy = enemiesCharacters[random.nextInt(enemiesCharacters.length)];
+            System.out.println("\t<< " + enemy.getName() + " has appeared ! >>\n");
 
             GAME:
-            while(enemyHealth > 0) {
-                System.out.println("\tYour HP: " + health);
-                System.out.println("\t" + enemy + "'s HP: " + enemyHealth);
+            while (enemy.getHealth() > 0) {
+                System.out.println("\tYour HP: " + player.getHealth());
+                System.out.println("\t" + enemy.getName() + "'s HP: " + enemy.getHealth());
                 System.out.println("\n\tWhat would you like to do with your enemy?");
                 System.out.println("\t1. Attack");
                 System.out.println("\t2. Drink health potion");
                 System.out.println("\t3. Run!!");
+                System.out.println("\t4. Open inventory");
 
-                //Interaction with the player/user
+                // Interaction with the player/user
                 String input = scanner.nextLine();
                 switch (input) {
                     case "1":
-                        int damageDealt = random.nextInt(attackDamage);
-                        int damageTaken = random.nextInt(enemyAttackDamage);
+                        int damageDealt = player.dealDamage(player.getAttackDamage());
+                        enemy.takeDamage(damageDealt);
+                        int damageTaken = enemy.dealDamage(enemy.getAttackDamage());
+                        player.takeDamage(damageTaken);
 
-
-                        enemyHealth -= damageDealt;
-                        System.out.println("\t You strike the " + enemy + " for " + damageDealt + " damage. ");
-                        health -= damageTaken;
+                        System.out.println("\t You strike the " + enemy.getName() + " for " + damageDealt + " damage. ");
                         System.out.println("\t You receive " + damageTaken + " in retaliation!");
                         System.out.println(" ");
 
-                        if (random.nextInt(100) < healthPotionDropChance) {
-                            numHealthPotions++;
-                            System.out.println(" ⚔︎ The " + enemy + " dropped a health potion ⚔︎ ");
-                            System.out.println(" ⚔︎ You have " + numHealthPotions + " health potions ⚔︎ ");
-                        }
 
-                        if (health <= 0) {
+                        handleEnemyDefeat(enemy, player);
+
+
+                        if (player.getHealth() <= 0) {
                             System.out.println("\t You have taken too much damage, you are too weak and died");
                             break GAME;
                         }
                         break;
                     case "2":
-                        if (numHealthPotions > 0) {
-                            health += healthPotionHealAmount;
-                            numHealthPotions--;
-                            System.out.println("\t> You have healed yourself " + healthPotionHealAmount + "\n\t You have " + health + "amount " +
-                                    "of HP. " + "\n\t" + numHealthPotions + "health potions left. \n");
-                        } else {
-                            System.out.println("\t> You have run out of health potions! Perhaps your enemies might have one!");
-                        }
+                        player.useHealthPotion();
                         break;
                     case "3":
-                        System.out.println("\t> You run away from the " + enemy + "!");
+                        System.out.println("\t> You run away from the " + enemy.getName() + "!");
                         break GAME;
                     case "4":
                         System.out.println("You have opened inventory");
+                        System.out.println("\tIn your bag there are still: " + player.getBag().getSize() + " free slots for new items");
+                        // Add logic to interact with the inventory
+                        break;
                     default:
-                        System.out.println("Invalid command, Choose 1, 2 or 3!");
+                        System.out.println("Invalid command, Choose 1, 2, 3, or 4!");
                 }
 
-                //Check after interaction whether the player is still alive
-                if (health < 1) {
+                // Check after interaction whether the player is still alive
+                if (player.getHealth() < 1) {
                     System.out.println("You are bleeding out and cannot fight anymore");
                     break;
                 }
 
-                if (enemyHealth <= 0) {
-                    System.out.println("*************************************************");
-                    System.out.println(" ⚔︎ " + enemy + " was defeated! ⚔︎ ");
-                    System.out.println(" ⚔︎ You have " + health + " HP left. ⚔︎");
-                }
+                /*
+                handleEnemyDefeat(enemy, player);
 
                 System.out.println("*************************************************");
-                System.out.println(" ⚔︎ You have " + health + " HP left. ⚔︎");
-
-
+                System.out.println(" ⚔︎ You have " + player.getHealth() + " HP left. ⚔︎");
+                */
 
                 System.out.println("*************************************************");
                 System.out.println(" What would you like to do now? ");
@@ -124,4 +121,20 @@ public class GameClass {
             }
         }
     }
+
+    private static void handleEnemyDefeat(AbstractCharacter enemy, PlayerCharacter player) {
+        if (enemy.isDefeated()) {
+            System.out.println("*************************************************");
+            System.out.println(" ⚔︎ " + enemy.getName() + " was defeated! ⚔︎ ");
+            if (enemy.shouldDropPotion()) {
+                System.out.println(" ⚔︎ The " + enemy.getName() + " dropped a health potion 🧪 ⚔︎ ");
+                player.getBag().addInventoryObject(new Potion("Health Potion 🧪", 30));
+                player.getBag().setSize(player.getBag().getSize() - 1);
+                System.out.println(" ⚔︎ You have " + player.getBag()
+                        + " health potions ⚔︎ ");
+            }
+        }
+        System.out.println(" ⚔︎ You have " + player.getHealth() + " HP left. ⚔︎");
+    }
+
 }

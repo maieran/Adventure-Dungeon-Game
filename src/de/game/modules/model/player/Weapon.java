@@ -1,26 +1,18 @@
 package de.game.modules.model.player;
 
-public class Weapon {
-    private String weaponName;
+public class Weapon extends InventoryObject<WeaponType> {
     private boolean isEquiped;
     private boolean isDefensive;
     private int attack;
     private int defensive;
-
-    public Weapon(String weaponName, boolean isEquiped, boolean isDefensive, int attack, int defensive) {
-        this.weaponName = weaponName;
+    private WeaponType weaponType;
+    public Weapon(String weaponName, boolean isEquiped, boolean isDefensive, int attack, int defensive, WeaponType weaponType) {
+        super(weaponName, weaponType);
         this.isEquiped = isEquiped;
         this.isDefensive = isDefensive;
         this.attack = attack;
         this.defensive = defensive;
-    }
-
-    public String getWeaponName() {
-        return weaponName;
-    }
-
-    public void setWeaponName(String weaponName) {
-        this.weaponName = weaponName;
+        this.weaponType = weaponType;
     }
 
     public boolean isEquiped() {
@@ -44,7 +36,11 @@ public class Weapon {
     }
 
     public void setAttack(int attack) {
-        this.attack = attack;
+        if (attack >= 0) {
+            this.attack = attack;
+        } else {
+            throw new IllegalArgumentException("Attack value must be non-negative.");
+        }
     }
 
     public int getDefensive() {
@@ -52,6 +48,10 @@ public class Weapon {
     }
 
     public void setDefensive(int defensive) {
-        this.defensive = defensive;
+        if (defensive >= 0) {
+            this.defensive = defensive;
+        } else {
+            throw new IllegalArgumentException("Defensive value must be non-negative");
+        }
     }
 }
