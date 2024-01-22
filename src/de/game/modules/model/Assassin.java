@@ -11,9 +11,11 @@ public class Assassin extends AbstractCharacter {
         //Define random value
         int randomHealth = random.nextInt(50); //up to 100 health;
         int randomAttackDamage = random.nextInt(100); //up to 100 Attack Damage
+        int randomDefAmount = random.nextInt(21); //up to 15 Defense from Damage
 
         setHealth(randomHealth);
         setAttackDamage(randomAttackDamage);
+        setDefAmount(randomDefAmount);
     }
 
     @Override
@@ -24,4 +26,5 @@ public class Assassin extends AbstractCharacter {
         }
         return false;
     }
+
 }

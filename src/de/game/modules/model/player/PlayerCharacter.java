@@ -69,4 +69,9 @@ public class PlayerCharacter extends AbstractCharacter {
     private int getMaxHealth() {
         return 100;
     }
+
+    @Override
+    public boolean shouldDropPotion() {
+        return false;
+    }
 }

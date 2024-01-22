@@ -75,8 +75,14 @@ public abstract class AbstractCharacter {
         return getHealth() <= 0;
     }
 
-    public boolean shouldDropPotion() {
-        return isDefeated();
-    }
+    public abstract boolean shouldDropPotion();
 
+    public int defendDamage(int damageTaken) {
+        int combatDefendAmount = random.nextInt(getDefAmount() + 1);
+        if (damageTaken > combatDefendAmount) {
+            return damageTaken - combatDefendAmount;
+        } else {
+            return 0;
+        }
+    }
 }

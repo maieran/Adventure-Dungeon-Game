@@ -21,7 +21,7 @@ public class GameClass {
         standardPlayerBag.addInventoryObject(standardShortPlayerSword);
         standardPlayerInventory.addBag(standardPlayerBag);
 
-        PlayerCharacter player = new PlayerCharacter(0, 100, "Player", 25, 0, 4, standardPlayerBag,
+        PlayerCharacter player = new PlayerCharacter(0, 100, "Player", 25, 26, 4, standardPlayerBag,
                 standardShortPlayerSword, standardPlayerInventory);
         player.setAttackDamage(player.getAttackDamage() + standardShortPlayerSword.getAttack());
         player.setBag(standardPlayerBag);
@@ -46,6 +46,12 @@ public class GameClass {
             while (enemy.getHealth() > 0) {
                 System.out.println("\tYour HP: " + player.getHealth());
                 System.out.println("\t" + enemy.getName() + "'s HP: " + enemy.getHealth());
+
+                //TODO: To know how much you or an enemy will deal damage, you need to loot an item from Assassin
+                //TODO: Assassine can run from you way, but you need his item to win later the first boss
+                //TODO: Bring another category that can gives you a pet, where you can decide either the pet or you can receive the dmg
+                System.out.println("\t" + enemy.getName() + "'s " + enemy.getAttackDamage() + " attack damage potential");
+                System.out.println("\t" + player.getName() + "'s " + player.getAttackDamage() + "'s attack damage potential");
                 System.out.println("\n\tWhat would you like to do with your enemy?");
                 System.out.println("\t1. Attack");
                 System.out.println("\t2. Drink health potion");
@@ -56,13 +62,29 @@ public class GameClass {
                 String input = scanner.nextLine();
                 switch (input) {
                     case "1":
-                        int damageDealt = player.dealDamage(player.getAttackDamage());
-                        enemy.takeDamage(damageDealt);
-                        int damageTaken = enemy.dealDamage(enemy.getAttackDamage());
-                        player.takeDamage(damageTaken);
 
+                        int damageDealt = player.dealDamage(player.getAttackDamage());
+                        int reducedDamageDealt = enemy.defendDamage(damageDealt);
+                        enemy.takeDamage(reducedDamageDealt);
                         System.out.println("\t You strike the " + enemy.getName() + " for " + damageDealt + " damage. ");
-                        System.out.println("\t You receive " + damageTaken + " in retaliation!");
+
+                        if (reducedDamageDealt > 0) {
+                            System.out.println("\t The " + enemy.getName() + " attempts to defend, but receives " + reducedDamageDealt + " damage.");
+                        } else {
+                            System.out.println("\t The " + enemy.getName() + " was able to defend and there is no impact");
+                        }
+
+
+                        int damageTaken = enemy.dealDamage(enemy.getAttackDamage());
+                        int reduceDamageTaken = player.defendDamage(damageTaken);
+                        player.takeDamage(reduceDamageTaken);
+
+                        if (reduceDamageTaken > 0) {
+                            System.out.println("\t The " + player.getName() + " attempts to defend, but receives " + reduceDamageTaken  + " damage.");
+                        } else {
+                            System.out.println("\t The " + player.getName() + " was able to defend the attack from " + enemy.getName() + " there is no impact");
+                        }
+
                         System.out.println(" ");
 
 
