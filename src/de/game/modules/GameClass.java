@@ -152,6 +152,7 @@ public class GameClass {
                 System.out.println(" ⚔︎ The " + enemy.getName() + " dropped a health potion 🧪 ⚔︎ ");
                 player.getBag().addInventoryObject(new Potion("Health Potion 🧪", 30));
                 player.getBag().setSize(player.getBag().getSize() - 1);
+                //TODO: here to fix
                 System.out.println(" ⚔︎ You have " + player.getBag()
                         + " health potions ⚔︎ ");
             }
