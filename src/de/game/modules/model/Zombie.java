@@ -9,7 +9,7 @@ public class Zombie extends AbstractCharacter {
         super(id, 0, "Zombie", 0, 0);
 
         //Define random value
-        int randomHealth = random.nextInt(71); //up to 70 health;
+        int randomHealth = random.nextInt(50) + 20; //up to 70 health;
         int randomAttackDamage = random.nextInt(31); //up to 30 Attack Damage
         int randomDefAmount = random.nextInt(16); //up to 15 Defense from Damage
 

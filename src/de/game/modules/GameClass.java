@@ -25,8 +25,8 @@ public class GameClass {
                 standardShortPlayerSword, standardPlayerInventory);
         player.setAttackDamage(player.getAttackDamage() + standardShortPlayerSword.getAttack());
         player.setBag(standardPlayerBag);
-        int reduceAmount = 0;
-        for (int i = 0; i < 4; i++) {
+        int reduceAmount = 1;
+        for (int i = 1; i <= 4; i++) {
             player.getBag().addInventoryObject(new Potion("Health Potion 🧪", 30));
             reduceAmount = i;
         }

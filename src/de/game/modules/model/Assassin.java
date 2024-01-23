@@ -9,7 +9,7 @@ public class Assassin extends AbstractCharacter {
         super(id, 0, "Assassin", 0, 20);
 
         //Define random value
-        int randomHealth = random.nextInt(50); //up to 100 health;
+        int randomHealth = random.nextInt(30) + 20; //up to 50 health;
         int randomAttackDamage = random.nextInt(100); //up to 100 Attack Damage
         int randomDefAmount = random.nextInt(21); //up to 15 Defense from Damage
 
