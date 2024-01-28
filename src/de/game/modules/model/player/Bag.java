@@ -43,8 +43,6 @@ public class Bag {
         if (!inventoryObject.getName().isEmpty() && slots.contains(inventoryObject)) {
             for (int i = 0; i < slots.size(); i++) {
                 if (inventoryObject.getName().equals(slots.get(i).getName())) {
-                    setSize(getSize() - 1);
-
                     slots.remove(i);
                     return;
                 }

@@ -50,4 +50,6 @@ class BagTest {
         assertEquals(6, totalFreeSlotsInTheCurrentBag);
     }
 
+
+
 }
