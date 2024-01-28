@@ -43,8 +43,6 @@ public class Bag {
         if (!inventoryObject.getName().isEmpty() && slots.contains(inventoryObject)) {
             for (int i = 0; i < slots.size(); i++) {
                 if (inventoryObject.getName().equals(slots.get(i).getName())) {
-                    setSize(getSize() - 1);
-
                     slots.remove(i);
                     return;
                 }
@@ -62,4 +60,19 @@ public class Bag {
         return null;  // Return null if no health potion is found
     }
 
+    public int utilTotalFreeSlotsInTheCurrentBag() {
+
+        return getSize() - getSlots().size();
+    }
+
+    public int utilTotalAmountOfHealthPotionsInTheBag(Bag bag) {
+        List<InventoryObject> listOfHealthPotions = new ArrayList<>();
+
+        for (InventoryObject inventoryObject : bag.getSlots()) {
+             if (inventoryObject instanceof Potion) {
+                 listOfHealthPotions.add(inventoryObject);
+             }
+        }
+        return listOfHealthPotions.size();
+    }
 }

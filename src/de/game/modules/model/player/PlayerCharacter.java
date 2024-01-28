@@ -41,6 +41,7 @@ public class PlayerCharacter extends AbstractCharacter {
         this.bag = bag;
     }
 
+
     public void useHealthPotion() {
         InventoryObject healthPotion = bag.findHealthPotion();
         if (healthPotion instanceof Potion && healthPotion != null) {
@@ -56,10 +57,11 @@ public class PlayerCharacter extends AbstractCharacter {
         }
     }
 
-    private int getAmountOfHealthPotions() {
+    public int getAmountOfHealthPotions() {
         int count = 0;
-        for (int i = 0; i < getBag().getSize(); i++) {
-            if (getBag().getSlots().get(i).getName().equals("Health Potion 🧪")) {
+        for (int i = 0; i < getBag().getSlots().size(); i++) {
+            InventoryObject expectedHealthPotion = getBag().getSlots().get(i);
+            if (expectedHealthPotion.getName().equals("Health Potion 🧪") && expectedHealthPotion instanceof Potion) {
                 count ++;
             }
         }

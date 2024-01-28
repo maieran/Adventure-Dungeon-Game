@@ -25,12 +25,9 @@ public class GameClass {
                 standardShortPlayerSword, standardPlayerInventory);
         player.setAttackDamage(player.getAttackDamage() + standardShortPlayerSword.getAttack());
         player.setBag(standardPlayerBag);
-        int reduceAmount = 1;
         for (int i = 1; i <= 4; i++) {
             player.getBag().addInventoryObject(new Potion("Health Potion 🧪", 30));
-            reduceAmount = i;
         }
-        player.getBag().setSize(player.getBag().getSize() - reduceAmount);
 
 
 
@@ -148,16 +145,17 @@ public class GameClass {
         if (enemy.isDefeated()) {
             System.out.println("*************************************************");
             System.out.println(" ⚔︎ " + enemy.getName() + " was defeated! ⚔︎ ");
+            //TODO:Später nachfragen, ob es aufgehoben werden soll und ins invetory hinzugefügt werden muss
             if (enemy.shouldDropPotion()) {
                 System.out.println(" ⚔︎ The " + enemy.getName() + " dropped a health potion 🧪 ⚔︎ ");
                 player.getBag().addInventoryObject(new Potion("Health Potion 🧪", 30));
-                player.getBag().setSize(player.getBag().getSize() - 1);
-                //TODO: here to fix
-                System.out.println(" ⚔︎ You have " + player.getBag()
+                int totalFreeSlotsInTheBag = player.getBag().utilTotalFreeSlotsInTheCurrentBag();
+                int totalAmountOfHealthPotionsInTheBag = player.getBag().utilTotalAmountOfHealthPotionsInTheBag(player.getBag());
+                System.out.println(" ︎ You have " + totalAmountOfHealthPotionsInTheBag
                         + " health potions ⚔︎ ");
+                System.out.println(" You have " + totalFreeSlotsInTheBag + " free slots in your bag.");
             }
         }
         System.out.println(" ⚔︎ You have " + player.getHealth() + " HP left. ⚔︎");
     }
-
 }
