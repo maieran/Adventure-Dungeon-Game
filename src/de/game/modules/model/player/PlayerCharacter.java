@@ -41,6 +41,7 @@ public class PlayerCharacter extends AbstractCharacter {
         this.bag = bag;
     }
 
+    //TODO: Now bug fix of useHealtPotion
     public void useHealthPotion() {
         InventoryObject healthPotion = bag.findHealthPotion();
         if (healthPotion instanceof Potion && healthPotion != null) {
