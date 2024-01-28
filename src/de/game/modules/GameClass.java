@@ -114,12 +114,6 @@ public class GameClass {
                     break;
                 }
 
-                /*
-                handleEnemyDefeat(enemy, player);
-
-                System.out.println("*************************************************");
-                System.out.println(" ⚔︎ You have " + player.getHealth() + " HP left. ⚔︎");
-                */
 
                 System.out.println("*************************************************");
                 System.out.println(" What would you like to do now? ");
@@ -142,18 +136,42 @@ public class GameClass {
     }
 
     private static void handleEnemyDefeat(AbstractCharacter enemy, PlayerCharacter player) {
+        Scanner scanner = new Scanner(System.in);
         if (enemy.isDefeated()) {
             System.out.println("*************************************************");
             System.out.println(" ⚔︎ " + enemy.getName() + " was defeated! ⚔︎ ");
-            //TODO:Später nachfragen, ob es aufgehoben werden soll und ins invetory hinzugefügt werden muss
             if (enemy.shouldDropPotion()) {
                 System.out.println(" ⚔︎ The " + enemy.getName() + " dropped a health potion 🧪 ⚔︎ ");
-                player.getBag().addInventoryObject(new Potion("Health Potion 🧪", 30));
-                int totalFreeSlotsInTheBag = player.getBag().utilTotalFreeSlotsInTheCurrentBag();
-                int totalAmountOfHealthPotionsInTheBag = player.getBag().utilTotalAmountOfHealthPotionsInTheBag(player.getBag());
-                System.out.println(" ︎ You have " + totalAmountOfHealthPotionsInTheBag
-                        + " health potions ⚔︎ ");
-                System.out.println(" You have " + totalFreeSlotsInTheBag + " free slots in your bag.");
+
+                System.out.println("*************************************************");
+                System.out.println("Do you want to loot the health potion 🧪?");
+                System.out.println("1. Yes, I want to pick it up");
+                System.out.println("2. Leave it, as it is.");
+                String input = scanner.nextLine();
+
+                while (!input.equals("1") && !input.equals("2")) {
+                    System.out.println("Invalid command! Choose 1 or 2");
+                    input = scanner.nextLine();
+                }
+
+                if (input.equals("1")) {
+                    if (player.getBag().getSlots().size() < player.getBag().getSize()) {
+                        System.out.println("You are picking up the health po");
+                        player.getBag().addInventoryObject(new Potion("Health Potion 🧪", 30));
+                        int totalFreeSlotsInTheBag = player.getBag().utilTotalFreeSlotsInTheCurrentBag();
+                        int totalAmountOfHealthPotionsInTheBag = player.getBag().utilTotalAmountOfHealthPotionsInTheBag(player.getBag());
+                        System.out.println(" ︎ You have now " + totalAmountOfHealthPotionsInTheBag
+                                + " health potions ⚔︎ ");
+                        System.out.println(" You have " + totalFreeSlotsInTheBag + " free slots in your bag.");
+                    } else {
+                        //TODO: Add open inventory/bag function
+                        System.out.println("Your bag is full, throw out some stuff");
+                    }
+                }
+
+                if (input.equals("2")) {
+                    System.out.println("You are leaving the dead body of " + enemy.getName() + " to the worms");
+                }
             }
         }
         System.out.println(" ⚔︎ You have " + player.getHealth() + " HP left. ⚔︎");
