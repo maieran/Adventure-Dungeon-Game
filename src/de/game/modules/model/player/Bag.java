@@ -62,4 +62,19 @@ public class Bag {
         return null;  // Return null if no health potion is found
     }
 
+    public int utilTotalFreeSlotsInTheCurrentBag() {
+
+        return getSize() - getSlots().size();
+    }
+
+    public int utilTotalAmountOfHealthPotionsInTheBag(Bag bag) {
+        List<InventoryObject> listOfHealthPotions = new ArrayList<>();
+
+        for (InventoryObject inventoryObject : bag.getSlots()) {
+             if (inventoryObject instanceof Potion) {
+                 listOfHealthPotions.add(inventoryObject);
+             }
+        }
+        return listOfHealthPotions.size();
+    }
 }
