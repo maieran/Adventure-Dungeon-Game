@@ -1,6 +1,9 @@
 package de.game.modules.model.player;
 
 import de.game.modules.model.AbstractCharacter;
+import de.game.modules.model.player.misc_usable.InventoryObject;
+import de.game.modules.model.player.misc_usable.Potion;
+import de.game.modules.model.player.weapon_equipable.Weapon;
 
 
 public class PlayerCharacter extends AbstractCharacter {

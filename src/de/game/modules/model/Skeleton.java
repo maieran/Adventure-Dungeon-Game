@@ -1,8 +1,10 @@
 package de.game.modules.model;
 
+import de.game.modules.interfaces.Lootable;
+
 import java.util.Random;
 
-public class Skeleton extends AbstractCharacter {
+public class Skeleton extends AbstractCharacter implements Lootable {
     private final Random random = new Random();
 
     public Skeleton(Integer id) {
@@ -25,6 +27,11 @@ public class Skeleton extends AbstractCharacter {
             return potionDropChance <= 50; // Adjust the drop chance as needed
         }
         return false;
+    }
+
+    @Override
+    public void onLoot(AbstractCharacter character) {
+
     }
 }
 

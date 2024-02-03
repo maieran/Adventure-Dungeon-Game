@@ -1,6 +1,11 @@
-package de.game.modules.model.player;
+package de.game.modules.model.player.weapon_equipable;
 
-public class Weapon extends InventoryObject<WeaponType> {
+import de.game.modules.interfaces.Equipable;
+import de.game.modules.interfaces.Lootable;
+import de.game.modules.model.AbstractCharacter;
+import de.game.modules.model.player.misc_usable.InventoryObject;
+
+public class Weapon extends InventoryObject<WeaponType> implements Lootable, Equipable {
     private boolean isEquiped;
     private boolean isDefensive;
     private int attack;
@@ -53,5 +58,15 @@ public class Weapon extends InventoryObject<WeaponType> {
         } else {
             throw new IllegalArgumentException("Defensive value must be non-negative");
         }
+    }
+
+    @Override
+    public void onEquip(AbstractCharacter character) {
+
+    }
+
+    @Override
+    public void onLoot(AbstractCharacter character) {
+
     }
 }

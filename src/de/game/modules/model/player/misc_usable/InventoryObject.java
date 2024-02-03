@@ -1,4 +1,4 @@
-package de.game.modules.model.player;
+package de.game.modules.model.player.misc_usable;
 
 
 public class InventoryObject<T> {

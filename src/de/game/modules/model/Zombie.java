@@ -1,8 +1,10 @@
 package de.game.modules.model;
 
+import de.game.modules.interfaces.Lootable;
+
 import java.util.Random;
 
-public class Zombie extends AbstractCharacter {
+public class Zombie extends AbstractCharacter implements Lootable {
     private final Random random = new Random();
 
     public Zombie(Integer id) {
@@ -31,4 +33,8 @@ public class Zombie extends AbstractCharacter {
         return false;
     }
 
+    @Override
+    public void onLoot(AbstractCharacter character) {
+
+    }
 }

@@ -1,5 +1,8 @@
 package de.game.modules.model.player;
 
+import de.game.modules.model.player.misc_usable.InventoryObject;
+import de.game.modules.model.player.misc_usable.Potion;
+
 import java.util.ArrayList;
 import java.util.List;
 

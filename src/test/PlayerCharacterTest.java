@@ -1,18 +1,17 @@
 package test;
 
 import de.game.modules.model.player.Bag;
-import de.game.modules.model.player.Inventory;
 import de.game.modules.model.player.PlayerCharacter;
-import de.game.modules.model.player.Potion;
+import de.game.modules.model.player.misc_usable.Potion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerCharacterTest {
-    private Potion potion;
+
     private PlayerCharacter player;
-    private Bag standardPlayerBag;
+
 
     @BeforeEach
     void setUp() {

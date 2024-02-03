@@ -1,8 +1,10 @@
 package de.game.modules.model;
 
+import de.game.modules.interfaces.Lootable;
+
 import java.util.Random;
 
-public class Warrior extends AbstractCharacter {
+public class Warrior extends AbstractCharacter implements Lootable {
     private final Random random = new Random();
 
     public Warrior(Integer id) {
@@ -25,5 +27,10 @@ public class Warrior extends AbstractCharacter {
             return potionDropChance <= 95;
         }
         return false;
+    }
+
+    @Override
+    public void onLoot(AbstractCharacter character) {
+
     }
 }

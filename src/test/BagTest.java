@@ -1,7 +1,7 @@
 package test;
 
 import de.game.modules.model.player.Bag;
-import de.game.modules.model.player.Potion;
+import de.game.modules.model.player.misc_usable.Potion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

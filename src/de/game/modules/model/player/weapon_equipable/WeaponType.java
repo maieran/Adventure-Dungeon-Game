@@ -1,4 +1,4 @@
-package de.game.modules.model.player;
+package de.game.modules.model.player.weapon_equipable;
 
 public enum WeaponType {
     AXE,
