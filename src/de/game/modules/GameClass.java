@@ -188,31 +188,7 @@ public class GameClass {
 
     private static void checkIfAssassinGooglesAreDropped(AbstractCharacter enemy, PlayerCharacter player) {
         if (enemy.isDefeated() && enemy instanceof Assassin) {
-            Assassin assassin = (Assassin) enemy;
-            InventoryObject assassinGoogle = assassin.dropAssassinGoogles();
-
-            if (assassinGoogle != null) {
-                System.out.println(" ⚔︎ The " + enemy.getName() + " dropped Assassin's Goggles! ⚔︎ ");
-
-                System.out.println("*************************************************");
-                System.out.println("Do you want to loot Assassin's Goggles?");
-                System.out.println("1. Yes, I want to pick them up");
-                System.out.println("2. Leave them, as they are.");
-                Scanner scanner = new Scanner(System.in);
-                String input = scanner.nextLine();
-
-                while (!input.equals("1") && !input.equals("2")) {
-                    System.out.println("Invalid command! Choose 1 or 2");
-                    input = scanner.nextLine();
-                }
-
-                if (input.equals("1")) {
-                    player.getBag().addInventoryObject(assassinGoogle);
-                    System.out.println("You picked up Assassin's Goggles!");
-                } else {
-                    System.out.println("You decided to leave Assassin's Goggles.");
-                }
-            }
+            ((Assassin) enemy).onLoot(player);
         }
     }
 }
