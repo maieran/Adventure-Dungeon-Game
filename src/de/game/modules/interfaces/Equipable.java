@@ -4,4 +4,5 @@ import de.game.modules.model.AbstractCharacter;
 
 public interface Equipable {
     void onEquip(AbstractCharacter character);
+    void onUnequip(AbstractCharacter character);
 }

@@ -48,13 +48,17 @@ public class GameClass {
             while (enemy.getHealth() > 0) {
                 System.out.println("\tYour HP: " + player.getHealth());
                 System.out.println("\t" + enemy.getName() + "'s HP: " + enemy.getHealth());
-
                 //TODO: To know how much you or an enemy will deal damage, you need to loot an item from Assassin
                 //TODO: Assassine can run from you way, but you need his item to win later the first boss
                 //TODO: Bring another category that can gives you a pet, where you can decide either the pet or you can receive the dmg for Warrior
                 //TODO: Add some loot for Skeleton and Zombie
-                System.out.println("\t" + enemy.getName() + "'s " + enemy.getAttackDamage() + " attack damage potential");
-                System.out.println("\t" + player.getName() + "'s " + player.getAttackDamage() + "'s attack damage potential");
+
+
+                    System.out.println("\t" + enemy.getName() + "'s " + enemy.getAttackDamage() + " attack damage potential");
+                    System.out.println("\t" + player.getName() + "'s " + player.getAttackDamage() + "'s attack damage potential");
+
+
+
                 System.out.println("\n\tWhat would you like to do with your enemy?");
                 System.out.println("\t1. Attack");
                 System.out.println("\t2. Drink health potion");
@@ -105,7 +109,7 @@ public class GameClass {
                     case "4":
                         System.out.println("You have opened inventory");
                         System.out.println("\tIn your bag there are still: " + player.getBag().getSize() + " free slots for new items");
-                        // Add logic to interact with the inventory
+                        player.openBag(scanner); //later u may have multiple bags
                         break;
                     default:
                         System.out.println("Invalid command, Choose 1, 2, 3, or 4!");

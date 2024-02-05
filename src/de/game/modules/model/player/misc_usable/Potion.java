@@ -6,7 +6,7 @@ import de.game.modules.interfaces.Usable;
 import de.game.modules.model.AbstractCharacter;
 import de.game.modules.model.player.PlayerCharacter;
 
-public class Potion extends InventoryObject<InventoryObjectType> implements Lootable, Usable {
+public class Potion extends InventoryObject<InventoryObjectType> implements Usable {
     private int healingAmount;
 
     public Potion(String potionName, int healingAmount) {
@@ -22,10 +22,6 @@ public class Potion extends InventoryObject<InventoryObjectType> implements Loot
         this.healingAmount = healingAmount;
     }
 
-    @Override
-    public void onLoot(AbstractCharacter character) {
-
-    }
 
     @Override
     public void onUse(AbstractCharacter character) {

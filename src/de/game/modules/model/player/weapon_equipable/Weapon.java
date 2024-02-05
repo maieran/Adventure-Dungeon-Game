@@ -5,7 +5,7 @@ import de.game.modules.interfaces.Lootable;
 import de.game.modules.model.AbstractCharacter;
 import de.game.modules.model.player.misc_usable.InventoryObject;
 
-public class Weapon extends InventoryObject<WeaponType> implements Lootable, Equipable {
+public class Weapon extends InventoryObject<WeaponType> implements Equipable {
     private boolean isEquiped;
     private boolean isDefensive;
     private int attack;
@@ -66,7 +66,7 @@ public class Weapon extends InventoryObject<WeaponType> implements Lootable, Equ
     }
 
     @Override
-    public void onLoot(AbstractCharacter character) {
+    public void onUnequip(AbstractCharacter character) {
 
     }
 }
