@@ -145,6 +145,7 @@ public class PlayerCharacter extends AbstractCharacter {
             if (chosenItem instanceof Equipable) {
                 ((Equipable) chosenItem).onEquip(this);
                 System.out.println("You equipped " + chosenItem.getName());
+                equippedItems.add(chosenItem);
             }
             if (chosenItem instanceof  Usable) {
                 ((Usable) chosenItem).onUse(this);

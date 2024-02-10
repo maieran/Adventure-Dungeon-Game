@@ -68,7 +68,9 @@ public abstract class AbstractCharacter {
     }
 
     public int dealDamage (int attackDamage) {
-        return random.nextInt(attackDamage + 1);
+        //TODO: Change back again to random
+        //return random.nextInt(attackDamage + 1);
+        return 100;
     }
 
     public boolean isDefeated() {

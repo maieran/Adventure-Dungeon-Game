@@ -32,7 +32,7 @@ public class AssassinGoogle extends InventoryObject<InventoryObjectType> impleme
         if (character instanceof PlayerCharacter) {
             PlayerCharacter player = (PlayerCharacter) character;
             player.unequipItem(this);
-            setEquiped(true);
+            setEquiped(false);
             System.out.println();
         }
     }

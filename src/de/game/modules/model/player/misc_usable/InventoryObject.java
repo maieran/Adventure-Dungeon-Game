@@ -26,4 +26,8 @@ public class InventoryObject<T> {
     public void setInventoryObjectType(T inventoryObjectType) {
         this.inventoryObjectType = inventoryObjectType;
     }
+
+    public T getType() {
+        return inventoryObjectType;
+    }
 }

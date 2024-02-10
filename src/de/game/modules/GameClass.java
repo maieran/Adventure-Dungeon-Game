@@ -4,6 +4,7 @@ import de.game.modules.interfaces.Lootable;
 import de.game.modules.model.*;
 import de.game.modules.model.player.*;
 import de.game.modules.model.player.misc_usable.InventoryObject;
+import de.game.modules.model.player.misc_usable.InventoryObjectType;
 import de.game.modules.model.player.misc_usable.Potion;
 import de.game.modules.model.player.weapon_equipable.Weapon;
 import de.game.modules.model.player.weapon_equipable.WeaponType;
@@ -17,8 +18,6 @@ public class GameClass {
         Random random = new Random();
 
 
-        //AbstractCharacter[] enemiesCharacters = {new Skeleton(1), new Zombie(2), new Warrior(3), new Assassin(4)};
-        AbstractCharacter[] enemiesCharacters = {new Assassin(4)};
         // Player character
         Bag standardPlayerBag = new Bag(10, "BagImage");
         Weapon standardShortPlayerSword =  new Weapon("Sword", true, false, random.nextInt(31), 0, WeaponType.SHORT_SWORD);
@@ -41,6 +40,8 @@ public class GameClass {
         // Start of Game
         while (true) {
             System.out.println("*************************************************");
+            //AbstractCharacter[] enemiesCharacters = {new Skeleton(1), new Zombie(2), new Warrior(3), new Assassin(4)};
+            AbstractCharacter[] enemiesCharacters = {new Assassin(4)};
             AbstractCharacter enemy = enemiesCharacters[random.nextInt(enemiesCharacters.length)];
             System.out.println("\t<< " + enemy.getName() + " has appeared ! >>\n");
 
@@ -48,16 +49,27 @@ public class GameClass {
             while (enemy.getHealth() > 0) {
                 System.out.println("\tYour HP: " + player.getHealth());
                 System.out.println("\t" + enemy.getName() + "'s HP: " + enemy.getHealth());
+
                 //TODO: To know how much you or an enemy will deal damage, you need to loot an item from Assassin
                 //TODO: Assassine can run from you way, but you need his item to win later the first boss
                 //TODO: Bring another category that can gives you a pet, where you can decide either the pet or you can receive the dmg for Warrior
                 //TODO: Add some loot for Skeleton and Zombie
 
+                for (InventoryObject item : player.getEquippedItems()) {
+                    System.out.println("Item Type: " + item.getType());
+                }
 
+
+
+                if (player.getEquippedItems().stream()
+                        .anyMatch(item -> item.getType() == InventoryObjectType.ASSASSIN_GOOGLE)) {
+
+                    System.out.println("\tThe" + player.getEquippedItems().stream()
+                            .filter(obj -> obj.equals(InventoryObjectType.ASSASSIN_GOOGLE))
+                            .map(InventoryObject::getName) + "allows you to see yours and the attack potential of your enemy!");
                     System.out.println("\t" + enemy.getName() + "'s " + enemy.getAttackDamage() + " attack damage potential");
                     System.out.println("\t" + player.getName() + "'s " + player.getAttackDamage() + "'s attack damage potential");
-
-
+                }
 
                 System.out.println("\n\tWhat would you like to do with your enemy?");
                 System.out.println("\t1. Attack");
@@ -96,9 +108,10 @@ public class GameClass {
                         handleEnemyDefeat(enemy, player);
 
                         if (player.getHealth() <= 0) {
-                            System.out.println("\t You have taken too much damage, you are too weak and died");
-                            break GAME;
+                            System.out.println("\t You have taken too much damage, you are too weak and die");
+                            return;
                         }
+
                         break;
                     case "2":
                         player.useHealthPotion();
@@ -108,7 +121,6 @@ public class GameClass {
                         break GAME;
                     case "4":
                         System.out.println("You have opened inventory");
-                        System.out.println("\tIn your bag there are still: " + player.getBag().getSize() + " free slots for new items");
                         player.openBag(scanner); //later u may have multiple bags
                         break;
                     default:
@@ -170,7 +182,6 @@ public class GameClass {
                 }
 
                 checkIfAssassinGooglesAreDropped(enemy, player);
-
             }
         }
         System.out.println(" ⚔︎ You have " + player.getHealth() + " HP left. ⚔︎");
@@ -183,7 +194,7 @@ public class GameClass {
             int totalFreeSlotsInTheBag = player.getBag().utilTotalFreeSlotsInTheCurrentBag();
             int totalAmountOfHealthPotionsInTheBag = player.getBag().utilTotalAmountOfHealthPotionsInTheBag(player.getBag());
             System.out.println(" ︎ You have now " + totalAmountOfHealthPotionsInTheBag
-                    + " health potions ⚔︎ ");
+                    + " health potions 🧪 ⚔︎ ");
             System.out.println(" You have " + totalFreeSlotsInTheBag + " free slots in your bag.");
         } else {
             System.out.println("The Bag is full, you need to free slots");

@@ -2,6 +2,7 @@ package de.game.modules.model;
 
 import de.game.modules.interfaces.Lootable;
 import de.game.modules.model.player.PlayerCharacter;
+import de.game.modules.model.player.misc_usable.AssassinGoogle;
 import de.game.modules.model.player.misc_usable.InventoryObject;
 import de.game.modules.model.player.misc_usable.InventoryObjectType;
 
@@ -21,7 +22,9 @@ public class Assassin extends AbstractCharacter implements Lootable {
         int randomDefAmount = random.nextInt(21); //up to 15 Defense from Damage
 
         setHealth(randomHealth);
+        setHealth(30);
         setAttackDamage(randomAttackDamage);
+        setAttackDamage(50);
         setDefAmount(randomDefAmount);
         setInitialHealth(getHealth());
     }
@@ -35,11 +38,11 @@ public class Assassin extends AbstractCharacter implements Lootable {
         return false;
     }
 
-    public InventoryObject dropAssassinGoogles() {
+    public AssassinGoogle dropAssassinGoogles() {
         if (isDefeated() && 50 >= getAttackDamage() && getInitialHealth() >= 30) {
             int dropChance = random.nextInt(101);
             if (dropChance <= 40) {
-                InventoryObject assassinGoogle = new InventoryObject("Assassin's Goggles",  InventoryObjectType.ASSASSIN_GOOGLE);
+                AssassinGoogle assassinGoogle = new AssassinGoogle("Assassin's Goggles",  InventoryObjectType.ASSASSIN_GOOGLE);
                 System.out.println("Assassin dropped " + assassinGoogle.getName() + "!");
                 return assassinGoogle;
             }
@@ -51,7 +54,7 @@ public class Assassin extends AbstractCharacter implements Lootable {
     public void onLoot(AbstractCharacter playerCharacter) {
         if (playerCharacter instanceof PlayerCharacter) {
             PlayerCharacter player = (PlayerCharacter) playerCharacter;
-            InventoryObject assassinGoogle = dropAssassinGoogles();
+            AssassinGoogle assassinGoogle = dropAssassinGoogles();
             if (assassinGoogle != null) {
                 System.out.println(" ⚔︎ The " + this.getName() + " dropped Assassin's Goggles! ⚔︎ ");
 
