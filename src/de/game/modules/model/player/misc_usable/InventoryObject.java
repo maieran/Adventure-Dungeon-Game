@@ -1,7 +1,7 @@
 package de.game.modules.model.player.misc_usable;
 
 
-public class InventoryObject<T> {
+public class InventoryObject<T extends Enum<T>>{
     private String name;
     private T inventoryObjectType;
 
@@ -27,7 +27,4 @@ public class InventoryObject<T> {
         this.inventoryObjectType = inventoryObjectType;
     }
 
-    public T getType() {
-        return inventoryObjectType;
-    }
 }

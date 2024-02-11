@@ -1,14 +1,15 @@
 package de.game.modules;
 
-import de.game.modules.interfaces.Lootable;
 import de.game.modules.model.*;
 import de.game.modules.model.player.*;
+import de.game.modules.model.player.misc_usable.AssassinGoogle;
 import de.game.modules.model.player.misc_usable.InventoryObject;
 import de.game.modules.model.player.misc_usable.InventoryObjectType;
 import de.game.modules.model.player.misc_usable.Potion;
 import de.game.modules.model.player.weapon_equipable.Weapon;
 import de.game.modules.model.player.weapon_equipable.WeaponType;
 
+import java.util.Optional;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -37,11 +38,9 @@ public class GameClass {
 
         System.out.println("WELCOME TO THE DUNGEON");
 
-        // Start of Game
         while (true) {
             System.out.println("*************************************************");
-            //AbstractCharacter[] enemiesCharacters = {new Skeleton(1), new Zombie(2), new Warrior(3), new Assassin(4)};
-            AbstractCharacter[] enemiesCharacters = {new Assassin(4)};
+            AbstractCharacter[] enemiesCharacters = {new Skeleton(1), new Zombie(2), new Warrior(3), new Assassin(4)};
             AbstractCharacter enemy = enemiesCharacters[random.nextInt(enemiesCharacters.length)];
             System.out.println("\t<< " + enemy.getName() + " has appeared ! >>\n");
 
@@ -50,26 +49,15 @@ public class GameClass {
                 System.out.println("\tYour HP: " + player.getHealth());
                 System.out.println("\t" + enemy.getName() + "'s HP: " + enemy.getHealth());
 
-                //TODO: To know how much you or an enemy will deal damage, you need to loot an item from Assassin
-                //TODO: Assassine can run from you way, but you need his item to win later the first boss
-                //TODO: Bring another category that can gives you a pet, where you can decide either the pet or you can receive the dmg for Warrior
+                //TODO: Bring another category that can gives you a pet, where you can decide either the pet or you can receive the dmg for Warrior and can heal itself
                 //TODO: Add some loot for Skeleton and Zombie
 
-                for (InventoryObject item : player.getEquippedItems()) {
-                    System.out.println("Item Type: " + item.getType());
-                }
 
+                /**
+                 * Checks if assasineGoogle is equipped, not null and uses it then on the player and the enemy
+                 */
+                useEquippedAssassinGoogle(enemy, player);
 
-
-                if (player.getEquippedItems().stream()
-                        .anyMatch(item -> item.getType() == InventoryObjectType.ASSASSIN_GOOGLE)) {
-
-                    System.out.println("\tThe" + player.getEquippedItems().stream()
-                            .filter(obj -> obj.equals(InventoryObjectType.ASSASSIN_GOOGLE))
-                            .map(InventoryObject::getName) + "allows you to see yours and the attack potential of your enemy!");
-                    System.out.println("\t" + enemy.getName() + "'s " + enemy.getAttackDamage() + " attack damage potential");
-                    System.out.println("\t" + player.getName() + "'s " + player.getAttackDamage() + "'s attack damage potential");
-                }
 
                 System.out.println("\n\tWhat would you like to do with your enemy?");
                 System.out.println("\t1. Attack");
@@ -149,6 +137,21 @@ public class GameClass {
                 } else if (input.equals("2")) {
                     System.out.println("Game over");
                     break;
+                }
+            }
+        }
+    }
+
+    private static void useEquippedAssassinGoogle(AbstractCharacter enemy, PlayerCharacter player) {
+        if (player.isEquippedWith(InventoryObjectType.ASSASSIN_GOOGLE)) {
+            Optional<InventoryObject> assassinGoogleOnOptional = player.getEquippedItems().stream()
+                    .filter(obj -> obj.getInventoryObjectType() == InventoryObjectType.ASSASSIN_GOOGLE)
+                    .findFirst();
+
+            if (assassinGoogleOnOptional.isPresent()) {
+                AssassinGoogle assassinGoogleOnUse = (AssassinGoogle) assassinGoogleOnOptional.get();
+                if (assassinGoogleOnUse.isEquiped()) {
+                    assassinGoogleOnUse.readAttackDamage(enemy, player);
                 }
             }
         }

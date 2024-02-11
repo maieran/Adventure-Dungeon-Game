@@ -4,6 +4,7 @@ import de.game.modules.interfaces.Equipable;
 import de.game.modules.interfaces.Usable;
 import de.game.modules.model.AbstractCharacter;
 import de.game.modules.model.player.misc_usable.InventoryObject;
+import de.game.modules.model.player.misc_usable.InventoryObjectType;
 import de.game.modules.model.player.misc_usable.Potion;
 import de.game.modules.model.player.weapon_equipable.Weapon;
 
@@ -116,7 +117,7 @@ public class PlayerCharacter extends AbstractCharacter {
             System.out.println("Using equipped items: ");
 
             for (InventoryObject equippedItem : equippedItems) {
-                if (equippedItem instanceof Usable) {
+                if (equippedItem instanceof Equipable) {
                     ((Usable) equippedItem).onUse(this);
                     System.out.println("Used " + equippedItem);
                 }
@@ -164,4 +165,7 @@ public class PlayerCharacter extends AbstractCharacter {
         this.equippedItems = equippedItems;
     }
 
+    public boolean isEquippedWith(InventoryObjectType type) {
+        return getEquippedItems().stream().anyMatch(item -> item.getInventoryObjectType() == type);
+    }
 }

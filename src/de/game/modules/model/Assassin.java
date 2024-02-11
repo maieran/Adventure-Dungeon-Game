@@ -22,9 +22,7 @@ public class Assassin extends AbstractCharacter implements Lootable {
         int randomDefAmount = random.nextInt(21); //up to 15 Defense from Damage
 
         setHealth(randomHealth);
-        setHealth(30);
         setAttackDamage(randomAttackDamage);
-        setAttackDamage(50);
         setDefAmount(randomDefAmount);
         setInitialHealth(getHealth());
     }
@@ -40,7 +38,8 @@ public class Assassin extends AbstractCharacter implements Lootable {
 
     public AssassinGoogle dropAssassinGoogles() {
         if (isDefeated() && 50 >= getAttackDamage() && getInitialHealth() >= 30) {
-            int dropChance = random.nextInt(101);
+            int dropChance = 40;
+                    //random.nextInt(101);
             if (dropChance <= 40) {
                 AssassinGoogle assassinGoogle = new AssassinGoogle("Assassin's Goggles",  InventoryObjectType.ASSASSIN_GOOGLE);
                 System.out.println("Assassin dropped " + assassinGoogle.getName() + "!");
