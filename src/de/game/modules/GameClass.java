@@ -70,35 +70,7 @@ public class GameClass {
                 switch (input) {
                     case "1":
 
-                        int damageDealt = player.dealDamage(player.getAttackDamage());
-                        int reducedDamageDealt = enemy.defendDamage(damageDealt);
-                        enemy.takeDamage(reducedDamageDealt);
-                        System.out.println("\t You strike the " + enemy.getName() + " for " + damageDealt + " damage. ");
-
-                        if (reducedDamageDealt > 0) {
-                            System.out.println("\t The " + enemy.getName() + " attempts to defend, but receives " + reducedDamageDealt + " damage.");
-                        } else {
-                            System.out.println("\t The " + enemy.getName() + " was able to defend and there is no impact");
-                        }
-
-
-                        int damageTaken = enemy.dealDamage(enemy.getAttackDamage());
-                        int reduceDamageTaken = player.defendDamage(damageTaken);
-                        player.takeDamage(reduceDamageTaken);
-
-                        if (reduceDamageTaken > 0) {
-                            System.out.println("\t The " + player.getName() + " attempts to defend, but receives " + reduceDamageTaken  + " damage.");
-                        } else {
-                            System.out.println("\t The " + player.getName() + " was able to defend the attack from " + enemy.getName() + " there is no impact");
-                        }
-                        System.out.println(" ");
-
-                        handleEnemyDefeat(enemy, player);
-
-                        if (player.getHealth() <= 0) {
-                            System.out.println("\t You have taken too much damage, you are too weak and die");
-                            return;
-                        }
+                        fightingTheEnemy(player, enemy);
 
                         break;
                     case "2":
@@ -139,6 +111,37 @@ public class GameClass {
                     break;
                 }
             }
+        }
+    }
+
+    private static void fightingTheEnemy(PlayerCharacter player, AbstractCharacter enemy) {
+        int damageDealt = player.dealDamage(player.getAttackDamage());
+        int reducedDamageDealt = enemy.defendDamage(damageDealt);
+        enemy.takeDamage(reducedDamageDealt);
+        System.out.println("\t You strike the " + enemy.getName() + " for " + damageDealt + " damage. ");
+
+        if (reducedDamageDealt > 0) {
+            System.out.println("\t The " + enemy.getName() + " attempts to defend, but receives " + reducedDamageDealt + " damage.");
+        } else {
+            System.out.println("\t The " + enemy.getName() + " was able to defend and there is no impact");
+        }
+
+
+        int damageTaken = enemy.dealDamage(enemy.getAttackDamage());
+        int reduceDamageTaken = player.defendDamage(damageTaken);
+        player.takeDamage(reduceDamageTaken);
+
+        if (reduceDamageTaken > 0) {
+            System.out.println("\t The " + player.getName() + " attempts to defend, but receives " + reduceDamageTaken  + " damage.");
+        } else {
+            System.out.println("\t The " + player.getName() + " was able to defend the attack from " + enemy.getName() + " there is no impact");
+        }
+        System.out.println(" ");
+
+        handleEnemyDefeat(enemy, player);
+
+        if (player.getHealth() <= 0) {
+            System.out.println("\t You have taken too much damage, you are too weak and die");
         }
     }
 

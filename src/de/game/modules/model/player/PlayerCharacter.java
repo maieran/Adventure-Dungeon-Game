@@ -93,7 +93,6 @@ public class PlayerCharacter extends AbstractCharacter {
 
     public void equipItem(InventoryObject item) {
         if (item instanceof Equipable) {
-            //((Equipable) item).onEquip(this);
             this.getEquippedItems().add(item);
             System.out.println("Equipped" + item.getName());
         } else {
@@ -103,7 +102,6 @@ public class PlayerCharacter extends AbstractCharacter {
 
     public void unequipItem(InventoryObject item) {
         if (item instanceof Equipable) {
-            //((Equipable) item).onEquip(this);
             this.getEquippedItems().remove(item);
             System.out.println("Equipped" + item.getName());
         } else {

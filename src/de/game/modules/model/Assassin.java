@@ -38,8 +38,7 @@ public class Assassin extends AbstractCharacter implements Lootable {
 
     public AssassinGoogle dropAssassinGoogles() {
         if (isDefeated() && 50 >= getAttackDamage() && getInitialHealth() >= 30) {
-            int dropChance = 40;
-                    //random.nextInt(101);
+            int dropChance = random.nextInt(101);
             if (dropChance <= 40) {
                 AssassinGoogle assassinGoogle = new AssassinGoogle("Assassin's Goggles",  InventoryObjectType.ASSASSIN_GOOGLE);
                 System.out.println("Assassin dropped " + assassinGoogle.getName() + "!");
