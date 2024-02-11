@@ -14,6 +14,20 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GameClass {
+    private static boolean isFightInProgress = false;
+
+    public void startFight() {
+        isFightInProgress = true;
+    }
+
+    public void endFight() {
+        isFightInProgress = false;
+    }
+
+    public boolean isFightInProgress() {
+        return isFightInProgress;
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
@@ -45,7 +59,7 @@ public class GameClass {
             System.out.println("\t<< " + enemy.getName() + " has appeared ! >>\n");
 
             GAME:
-            while (enemy.getHealth() > 0) {
+            while (enemy.getHealth() > 0 && player.getHealth() > 0) {
                 System.out.println("\tYour HP: " + player.getHealth());
                 System.out.println("\t" + enemy.getName() + "'s HP: " + enemy.getHealth());
 
@@ -110,6 +124,11 @@ public class GameClass {
                     System.out.println("Game over");
                     break;
                 }
+            }
+
+            if (player.getHealth() < 0 ) {
+                System.out.println("You are dead, game over !");
+                return;
             }
         }
     }
@@ -212,4 +231,6 @@ public class GameClass {
             ((Assassin) enemy).onLoot(player);
         }
     }
+
+
 }
