@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 
 
 
-
+//TODO: Shift into 2-D World after finishing the console
 public class GameGui extends Application
 {
     private ImageView playerIcon;
