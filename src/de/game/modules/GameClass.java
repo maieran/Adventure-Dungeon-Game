@@ -13,25 +13,21 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.Scanner;
 
-public class GameClass {
-    private static boolean isFightInProgress = false;
+public class GameClass //extends Application
+{
 
-    public void startFight() {
-        isFightInProgress = true;
+    public GameClass() {
     }
 
-    public void endFight() {
-        isFightInProgress = false;
-    }
-
-    public boolean isFightInProgress() {
-        return isFightInProgress;
-    }
 
     public static void main(String[] args) {
+        GameClass gameClass = new GameClass();
+        gameClass.startGameWithOutGui();
+    }
+
+    public void startGameWithOutGui() {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
-
 
         // Player character
         Bag standardPlayerBag = new Bag(10, "BagImage");
@@ -66,10 +62,11 @@ public class GameClass {
                 //TODO: Bring another category that can gives you a pet, where you can decide either the pet or you can receive the dmg for Warrior and can heal itself
                 //TODO: Add some loot for Skeleton and Zombie
 
-
                 /**
                  * Checks if assasineGoogle is equipped, not null and uses it then on the player and the enemy
                  */
+                //gameGui.initializeIcons(enemy);
+                //gameGui.initializeVsBox();
                 useEquippedAssassinGoogle(enemy, player);
 
 
@@ -83,9 +80,7 @@ public class GameClass {
                 String input = scanner.nextLine();
                 switch (input) {
                     case "1":
-
                         fightingTheEnemy(player, enemy);
-
                         break;
                     case "2":
                         player.useHealthPotion();
@@ -106,7 +101,6 @@ public class GameClass {
                     System.out.println("You are bleeding out and cannot fight anymore");
                     break;
                 }
-
 
                 System.out.println("*************************************************");
                 System.out.println(" What would you like to do now? ");
@@ -231,6 +225,5 @@ public class GameClass {
             ((Assassin) enemy).onLoot(player);
         }
     }
-
 
 }
