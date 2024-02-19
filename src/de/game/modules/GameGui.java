@@ -1,7 +1,7 @@
 package de.game.modules;
 
-
-
+/*
+//TODO: Shift into 2-D World after finishing the console
 import de.game.modules.model.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 
 
 
-//TODO: Shift into 2-D World after finishing the console
+
 public class GameGui extends Application
 {
     private ImageView playerIcon;
@@ -123,3 +123,4 @@ public class GameGui extends Application
         launch(args);
     }
 }
+ */
