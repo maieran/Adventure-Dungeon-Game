@@ -1,6 +1,7 @@
+/*
 package de.game.modules;
 
-/*
+
 //TODO: Shift into 2-D World after finishing the console
 import de.game.modules.model.*;
 import javafx.scene.Scene;
@@ -14,7 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-
+/*
 
 
 public class GameGui extends Application
@@ -123,4 +124,5 @@ public class GameGui extends Application
         launch(args);
     }
 }
- */
+*/
+

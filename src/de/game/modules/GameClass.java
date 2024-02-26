@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.Scanner;
 
-public class GameClass //extends Application
+public class GameClass
 {
 
     public GameClass() {
@@ -29,7 +29,7 @@ public class GameClass //extends Application
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
-        // Player character
+        // Player character init
         Bag standardPlayerBag = new Bag(10, "BagImage");
         Weapon standardShortPlayerSword =  new Weapon("Sword", true, false, random.nextInt(31), 0, WeaponType.SHORT_SWORD);
         Inventory standardPlayerInventory = new Inventory();
@@ -65,9 +65,11 @@ public class GameClass //extends Application
                 /**
                  * Checks if assasineGoogle is equipped, not null and uses it then on the player and the enemy
                  */
-                //gameGui.initializeIcons(enemy);
-                //gameGui.initializeVsBox();
+
                 useEquippedAssassinGoogle(enemy, player);
+                //useWarriorPetAgainstEnemy(enemy, player);
+                //useZombieShirt(player);
+                //useSkeletonSkull(player);
 
 
                 System.out.println("\n\tWhat would you like to do with your enemy?");
